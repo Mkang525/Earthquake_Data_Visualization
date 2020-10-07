@@ -1,6 +1,6 @@
 var myMap = L.map("map", {
     center: [45.52, -122.67],
-    zoom: 5
+    zoom: 5,
   });
 
   L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -8,9 +8,32 @@ var myMap = L.map("map", {
   tileSize: 512,
   maxZoom: 18,
   zoomOffset: -1,
-  id: "mapbox/streets-v11",
+  id: "mapbox/satellite-v9",
   accessToken: API_KEY
 }).addTo(myMap);
+
+var light = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+  attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+  maxZoom: 18,
+  id: "light-v10",
+  accessToken: API_KEY
+});
+
+var satellite = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+  attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+  maxZoom: 18,
+  id: "satellite-v9",
+  accessToken: API_KEY
+});
+
+var baseMaps = {
+    Satellite: satellite,
+    Light: light,
+  };
+  
+L.control.layers(baseMaps).addTo(myMap);
+
+
 
   d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson", function(data) {
     var earthquakeData = (data.features);
@@ -37,27 +60,20 @@ var myMap = L.map("map", {
         var long = earthquakeData[i].geometry.coordinates[0];
         
         var location = (`${lat}, ${long}`);
-        console.log(location)
-        // console.log(location);
-        // console.log(earthquakeData[i].properties.mag);
+        console.log(location);
         
         L.circle([earthquakeData[i].geometry.coordinates[1], earthquakeData[i].geometry.coordinates[0]], {
             fillOpacity: 0.75,
             color: "white",
             fillColor: color,
-            radius: magnitude * 50000
-        }).bindPopup("<h1>" + earthquakeData[i].properties.place + "</h1><hr><h3>Magnitude: " + magnitude + "</h3>").addTo(myMap);
+            
+            radius: magnitude * 15000
+        }).bindPopup("<h1>Magnitude: " + magnitude + "</h1><hr><h3>Location: " + earthquakeData[i].properties.place + "</h3>").addTo(myMap);
+  
     };
-        // var markers = L.markerClusterGroup();
 
-        // markers.addLayer(L.marker(location)
-        // .bindPopup("<h1>" + earthquakeData[i].properties.place + "</h1><hr><h3>Magnitude: " + earthquakeData[i].properties.mag + "</h3>")
-        // )
-        // myMap.addLayer(markers);
+    
 
-        // }).bindPopup("<h1>" + earthquakeData[i].properties.place + "</h1><hr><h3>Magnitude: " + earthquakeData[i].properties.mag + "</h3>")
-        //     .addTo(myMap);
-            // });
 
 
 });
