@@ -8,7 +8,7 @@ var myMap = L.map("map", {
   tileSize: 512,
   maxZoom: 18,
   zoomOffset: -1,
-  id: "mapbox/satellite-v9",
+  id: "mapbox/light-v10",
   accessToken: API_KEY
 }).addTo(myMap);
 
@@ -47,13 +47,22 @@ L.control.layers(baseMaps).addTo(myMap);
 
         var color = "";
         if (magnitude > 4.5) {
-            color = "red";
+            color = "#dc143c";
+        }
+        else if (magnitude > 4.0) {
+            color = "#ec5038"
+        }
+        else if (magnitude > 3.5) {
+            color = "#f47136"
+        }
+        else if (magnitude > 3.0) {
+            color = "#fc8c34"
         }
         else if (magnitude > 2.5) {
-            color = "yellow";
+            color = "#fab009";
         }
         else {
-            color = "green"
+            color = "#ffcc00"
         }
 
         var lat = earthquakeData[i].geometry.coordinates[1];
@@ -61,14 +70,20 @@ L.control.layers(baseMaps).addTo(myMap);
         
         var location = (`${lat}, ${long}`);
         console.log(location);
+        var url = earthquakeData[i].properties.url;
+        var urlLink = (`<a href="${url}"> Click for more Info</a>`)
+        console.log(urlLink);
         
         L.circle([earthquakeData[i].geometry.coordinates[1], earthquakeData[i].geometry.coordinates[0]], {
             fillOpacity: 0.75,
             color: "white",
+            stroke: true,
+            weight: 1,
             fillColor: color,
             
-            radius: magnitude * 15000
-        }).bindPopup("<h1>Magnitude: " + magnitude + "</h1><hr><h3>Location: " + earthquakeData[i].properties.place + "</h3>").addTo(myMap);
+            
+            radius: magnitude * 20000
+        }).bindPopup("<h1>Magnitude: " + magnitude + "</h1><hr><h3>Location: " + earthquakeData[i].properties.place + "<br>" + urlLink).addTo(myMap);
   
     };
 
