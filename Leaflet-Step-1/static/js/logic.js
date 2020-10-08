@@ -8,7 +8,7 @@ var myMap = L.map("map", {
   tileSize: 512,
   maxZoom: 18,
   zoomOffset: -1,
-  id: "mapbox/light-v10",
+  id: "mapbox/satellite-v9",
   accessToken: API_KEY
 }).addTo(myMap);
 
@@ -71,7 +71,7 @@ L.control.layers(baseMaps).addTo(myMap);
         var location = (`${lat}, ${long}`);
         console.log(location);
         var url = earthquakeData[i].properties.url;
-        var urlLink = (`<a href="${url}"> Click for more Info</a>`)
+        var urlLink = (`<a target='_blank' href="${url}"> Click for more Info</a>`)
         console.log(urlLink);
         
         L.circle([earthquakeData[i].geometry.coordinates[1], earthquakeData[i].geometry.coordinates[0]], {
@@ -86,9 +86,21 @@ L.control.layers(baseMaps).addTo(myMap);
         }).bindPopup("<h1>Magnitude: " + magnitude + "</h1><hr><h3>Location: " + earthquakeData[i].properties.place + "<br>" + urlLink).addTo(myMap);
   
     };
-
-    
-
-
-
 });
+
+var legend = L.control({ position: "bottomright" });
+
+legend.onAdd = function(map) {
+  var div = L.DomUtil.create("div", "legend");
+  div.innerHTML += "<strong><h4>Magnitude</h4></strong>";
+  div.innerHTML += '<i style="background: #dc143c"></i><span> > 4.5 </span><br>';
+  div.innerHTML += '<i style="background: #ec5038"></i><span> 3.9 - 4.5 </span><br>';
+  div.innerHTML += '<i style="background: #f47136"></i><span>  3.6 - 4.0  </span><br>';
+  div.innerHTML += '<i style="background: #fc8c34"></i><span>  2.9 - 3.5 </span><br>';
+  div.innerHTML += '<i style="background: #fab009"></i><span> 2.4 - 3.0 </span><br>';
+  div.innerHTML += '<i style="background: #FFEDA0"></i><span> 0 - 2.5 </span><br>';
+  
+  return div;
+};
+
+legend.addTo(myMap);
