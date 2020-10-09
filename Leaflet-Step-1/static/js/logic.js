@@ -33,17 +33,15 @@ var baseMaps = {
   
 L.control.layers(baseMaps).addTo(myMap);
 
+//Create circles 
 
-
-  d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson", function(data) {
+  d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson", function(data) {
     var earthquakeData = (data.features);
     console.log(earthquakeData);
    
 
-
     for (var i = 0; i < earthquakeData.length; i++) {
         var magnitude = earthquakeData[i].properties.mag;
-        console.log(magnitude);
 
         var color = "";
         if (magnitude > 4.5) {
@@ -87,6 +85,8 @@ L.control.layers(baseMaps).addTo(myMap);
   
     };
 });
+
+// Create a legend
 
 var legend = L.control({ position: "bottomright" });
 
