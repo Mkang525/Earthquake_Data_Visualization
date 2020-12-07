@@ -1,4 +1,4 @@
-#Earthquake Map 
+# Earthquake Map 
 
 <img src="https://github.com/Mkang525/Earthquake_Data_Visualization/blob/main/Images/map.JPG?raw=true">
 <ul>
