@@ -6,4 +6,5 @@
   <li>Each earthquake is indicated by a circle with a radius equivalent to the magnitude of the earthquake. The location of each circle was taken from the latitude, longitude coordinates given in the GEOjson file</li><br>
   <li>When a circle is clicked on, a pop-up appears with information about the magnitude of the earthquake, the location, as well as a link to the USGS site that provides the user more specific information about that particular earthquake </li><br>
   <img src="https://github.com/Mkang525/Earthquake_Data_Visualization/blob/main/Images/info.JPG?raw=true">
-  <li>Multiple layers created to provide different views of the data, and I also created a legend to provided context for the map data</li>
+  <li>Multiple layers created to provide different views of the data, and I also created a legend to provided context for the map data</li><br>
+<img src="https://github.com/Mkang525/Earthquake_Data_Visualization/blob/main/Images/light.JPG?raw=true">
